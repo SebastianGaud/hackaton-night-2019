@@ -5,11 +5,13 @@ using System.Threading.Tasks;
 using ApiAiSDK;
 using ApiAiSDK.Model;
 using Microsoft.AspNetCore.Authentication.Twitter;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 
 
 namespace hackaton_night_2019.Controllers
 {
+    [ApiController, Route("Dialog")]
     public class DialogController : Controller
     {
         [HttpGet]
