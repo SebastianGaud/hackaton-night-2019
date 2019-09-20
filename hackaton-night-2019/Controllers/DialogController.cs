@@ -12,7 +12,8 @@ namespace hackaton_night_2019.Controllers
 {
     public class DialogController : Controller
     {
-        public string GetResponseFromDialogFlow(string question,string context)
+        [HttpGet]
+        public IActionResult GetResponseFromDialogFlow(string question,string context)
         {
             //var test= ApiAi.Models.
             //var query = new QueryInput
@@ -72,7 +73,10 @@ namespace hackaton_night_2019.Controllers
 
             var response = apiAi.TextRequest(question/*, requestExtras*/);
 
-            return response.Result.Fulfillment.Speech; //dialogFlow.QueryResult.OutputContexts.;
+            return Ok(new
+            {
+                data = response.Result.Fulfillment.Speech   
+            }); //dialogFlow.QueryResult.OutputContexts.;
         }
     }
 }
