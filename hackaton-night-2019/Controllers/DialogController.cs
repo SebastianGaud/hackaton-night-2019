@@ -2,8 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using ApiAiSDK;
+using ApiAiSDK.Model;
+using Microsoft.AspNetCore.Authentication.Twitter;
 using Microsoft.AspNetCore.Mvc;
-using ApiAi;
+
 
 namespace hackaton_night_2019.Controllers
 {
@@ -29,7 +32,7 @@ namespace hackaton_night_2019.Controllers
 
             //var client = SessionsClient.Create(channel);
 
-           
+
 
             ////var dialogFlow = client.DetectIntent(new SessionName(agent, sessionId),query);
 
@@ -54,7 +57,22 @@ namespace hackaton_night_2019.Controllers
 
             //var dialogFlow = client.DetectIntent(detectIntentRequest);
 
-            return null; //dialogFlow.QueryResult.OutputContexts.;
+
+
+            var config = new AIConfiguration("27a5dfa1bde94f2eb109717143748e78", SupportedLanguage.Italian);
+
+            var apiAi = new ApiAiSDK.ApiAi(config);
+
+            var contexts = new List<AIContext> {new AIContext {Name = context}};
+
+            var requestExtras= new RequestExtras
+            {
+                Contexts = contexts
+            };
+
+            var response = apiAi.TextRequest(question/*, requestExtras*/);
+
+            return response.Result.Fulfillment.Speech; //dialogFlow.QueryResult.OutputContexts.;
         }
     }
 }
