@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Google.Dialogflow.Client;
+using ApiAi;
 
 namespace hackaton_night_2019.Controllers
 {
@@ -11,7 +11,7 @@ namespace hackaton_night_2019.Controllers
     {
         public string GetResponseFromDialogFlow(string question,string context)
         {
-            //var test= dialogf
+            //var test= ApiAi.Models.
             //var query = new QueryInput
             //{
             //    Text = new TextInput
