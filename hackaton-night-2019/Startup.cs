@@ -28,7 +28,7 @@ namespace hackaton_night_2019
                 options.AddDefaultPolicy(
                     builder =>
                     {
-                        builder.WithOrigins("http://localhost:4200/")
+                        builder.WithOrigins("http://localhost:4200/", "https://wordpress-136743-992194.cloudwaysapps.com/")
                             .AllowAnyHeader()
                             .AllowAnyOrigin()
                             .AllowAnyMethod();
