@@ -11,7 +11,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace hackaton_night_2019.Controllers
 {
-    [ApiController, Route("Dialog")]
+    [EnableCors]
     public class DialogController : Controller
     {
         [HttpGet]

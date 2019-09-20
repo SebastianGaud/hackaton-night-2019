@@ -25,10 +25,10 @@ namespace hackaton_night_2019
             services.AddCors(options =>
             {
 
-                options.AddPolicy("AnotherPolicy",
+                options.AddDefaultPolicy(
                     builder =>
                     {
-                        builder.WithOrigins("http://localhost:4000")
+                        builder.WithOrigins("http://localhost:4200/")
                             .AllowAnyHeader()
                             .AllowAnyOrigin()
                             .AllowAnyMethod();
