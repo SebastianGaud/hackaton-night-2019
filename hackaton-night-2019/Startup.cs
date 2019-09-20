@@ -1,3 +1,4 @@
+using hackaton_night_2019.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -26,6 +27,8 @@ namespace hackaton_night_2019
             {
                 configuration.RootPath = "ClientApp/dist";
             });
+
+            services.AddTransient<IDatabaseContext, DatabaseContext>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
