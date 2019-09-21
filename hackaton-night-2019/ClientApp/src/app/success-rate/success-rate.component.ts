@@ -27,7 +27,7 @@ export class SuccessRateComponent {
 
     public pieChartLabels: Label[] = [
         "Chat portate a buon termine",
-        "Chat troncate"
+        "Chat con apertura ticket"
     ];
     public pieChartData: number[] = [];
     public pieChartType: ChartType = "pie";
