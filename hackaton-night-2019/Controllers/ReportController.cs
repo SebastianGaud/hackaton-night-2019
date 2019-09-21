@@ -5,12 +5,14 @@ using System.Threading.Tasks;
 using hackaton_night_2019.Config;
 using hackaton_night_2019.Models;
 using hackaton_night_2019.Services;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace hackaton_night_2019.Controllers
 {
+    [EnableCors]
     public class ReportController : Controller
     {
         private readonly Dictionary<string, IEnumerable<string>> _intentRegistry;
@@ -47,11 +49,11 @@ namespace hackaton_night_2019.Controllers
         {
             var data = _context.Get<MessageDescriptor>(Consts.MessageDescriptorTable).FindAll();
 
-            var count = data.GroupBy(x => x.IntentName).ToDictionary(k => k.Key, v => v.Count());
+            var count = data.Where(x => !string.IsNullOrWhiteSpace(x.IntentName)).GroupBy(x => x.IntentName).ToDictionary(k => k.Key, v => v.Count());
 
             return Ok(new
             {
-                data = data.Select(descriptor => new
+                data = data.Where(x => !string.IsNullOrWhiteSpace(x.IntentName)).Select(descriptor => new
                 {
                     desc = GetValue(descriptor.IntentName),
                     c = count[descriptor.IntentName]

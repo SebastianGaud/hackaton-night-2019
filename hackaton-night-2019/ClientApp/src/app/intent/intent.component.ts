@@ -36,6 +36,7 @@ export class IntentComponent {
             })
             .toPromise()
             .then(res => {
+                console.log(res);
                 res.data.forEach(e => {
                     this.barChartLabels.push(e.desc);
                     chartData.data.push(e.c);
