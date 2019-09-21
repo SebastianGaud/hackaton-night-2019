@@ -8,12 +8,6 @@ if (environment.production) {
     enableProdMode();
 }
 
-export function getBaseUrl() {
-    return environment.base_url;
-}
-
-const providers = [{ provide: "BASE_URL", useFactory: getBaseUrl, deps: [] }];
-
-platformBrowserDynamic(providers)
+platformBrowserDynamic()
     .bootstrapModule(AppModule)
     .catch(err => console.error(err));
