@@ -5,7 +5,7 @@ import { Component } from "@angular/core";
     template: `
         <nb-layout>
             <nb-layout-header fixed>
-                <!-- Insert header here -->
+                Data and charts
             </nb-layout-header>
 
             <nb-layout-column>
