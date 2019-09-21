@@ -11,9 +11,10 @@ import { HttpClientModule } from "@angular/common/http";
 import { ChartsComponent } from './charts/charts.component';
 import { OpenedChartComponent } from './opened-chart/opened-chart.component';
 import { SuccessRateComponent } from './success-rate/success-rate.component';
+import { TicketComponent } from './ticket/ticket.component';
 
 @NgModule({
-    declarations: [AppComponent, ChartsComponent, OpenedChartComponent, SuccessRateComponent],
+    declarations: [AppComponent, ChartsComponent, OpenedChartComponent, SuccessRateComponent, TicketComponent],
     imports: [
         BrowserModule,
         AppRoutingModule,

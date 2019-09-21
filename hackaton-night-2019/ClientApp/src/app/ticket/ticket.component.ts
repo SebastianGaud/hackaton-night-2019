@@ -1,15 +1,15 @@
 import { Component, OnInit } from "@angular/core";
-import { ChartOptions, ChartType, ChartDataSets } from "chart.js";
+import { ChartType, ChartDataSets, ChartOptions } from "chart.js";
 import { Label } from "ng2-charts";
 import { HttpClient } from "@angular/common/http";
 import { environment } from "src/environments/environment.prod";
 
 @Component({
-    selector: "app-opened-chart",
-    templateUrl: "./opened-chart.component.html",
-    styleUrls: ["./opened-chart.component.scss"]
+    selector: "app-ticket",
+    templateUrl: "./ticket.component.html",
+    styleUrls: ["./ticket.component.scss"]
 })
-export class OpenedChartComponent {
+export class TicketComponent {
     public barChartType: ChartType = "bar";
     public barChartLabels: Label[] = [];
     public barChartLegend = false;
@@ -32,16 +32,16 @@ export class OpenedChartComponent {
         };
         this.http
             .get<Response>(
-                `${environment.base_url}/Dialog/GetOpenedChatsAsJson`,
+                `${environment.base_url}/Dialog/GetOpenedTicketsAsJson`,
                 {
                     params: {}
                 }
             )
             .toPromise()
             .then(res => {
-                res.openedChats.forEach(e => {
-                    this.barChartLabels.push(e.day);
-                    chartData.data.push(e.openedChats);
+                res.openedTicket.forEach(e => {
+                    this.barChartLabels.push(e.date);
+                    chartData.data.push(e.openedTicket);
                 });
             }, console.log);
         this.barChartData.push(chartData);
@@ -49,10 +49,10 @@ export class OpenedChartComponent {
 }
 
 interface Response {
-    openedChats: Array<ResponeObj>;
+    openedTicket: Array<ResponeObj>;
 }
 
 interface ResponeObj {
-    day: string;
-    openedChats: number;
+    date: string;
+    openedTicket: number;
 }

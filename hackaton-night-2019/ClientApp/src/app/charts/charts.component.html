@@ -1,4 +1,21 @@
 <nb-layout-column>
-    <h1>Ciaone</h1>
-    <app-opened-chart></app-opened-chart>
+    <div style="display: flex; flex-direction: row">
+        <nb-card style="width: 900px; margin-right: 25px">
+            <nb-card-body>
+                <app-opened-chart></app-opened-chart>
+            </nb-card-body>
+        </nb-card>
+        <nb-card style="width: 500px;">
+            <nb-card-body>
+                <app-success-rate></app-success-rate>
+            </nb-card-body>
+        </nb-card>
+    </div>
+    <div style="display: flex; flex-direction: row">
+        <nb-card style="width: 900px">
+            <nb-card-body>
+                <app-ticket></app-ticket>
+            </nb-card-body>
+        </nb-card>
+    </div>
 </nb-layout-column>
