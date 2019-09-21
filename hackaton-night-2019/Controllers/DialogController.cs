@@ -30,7 +30,7 @@ namespace hackaton_night_2019.Controllers
 
             switch (context)
             {
-                case "Mail":
+                case "mail":
                     try
                     {
                         var addr = new System.Net.Mail.MailAddress(question);
@@ -43,7 +43,7 @@ namespace hackaton_night_2019.Controllers
                     }
                     break;
 
-                case "Seriale":
+                case "seriale":
                     
                     question = "serialeUtente";
 
@@ -69,7 +69,7 @@ namespace hackaton_night_2019.Controllers
                         });
                     }
 
-                case "NomeCognome":
+                case "nomeCognome":
 
                     question = "nomeCognomeUtente";
 
