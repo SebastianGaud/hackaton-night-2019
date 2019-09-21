@@ -25,7 +25,7 @@ namespace hackaton_night_2019.Controllers
         }
 
         [HttpGet]
-        public IActionResult GetResponseFromDialogFlow(string question,string context)
+        public IActionResult GetResponseFromDialogFlow(string question,string context, string conversationId)
         {
             var config = new AIConfiguration("27a5dfa1bde94f2eb109717143748e78", SupportedLanguage.Italian);
 
@@ -55,10 +55,11 @@ namespace hackaton_night_2019.Controllers
                 Question = question,
                 Response = responseText,
                 SessionId = response.SessionId,
-                TimeStamp = DateTime.Now
+                TimeStamp = DateTime.Now,
+                ConversationId = conversationId
             };
 
-            //_dbContext.Set(messageDescriptor, Consts.MessageDescriptorTable);
+            _dbContext.Set(messageDescriptor, Consts.MessageDescriptorTable);
 
 
             return Ok(new
