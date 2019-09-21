@@ -1,6 +1,6 @@
-# hackaton_night_2019
+# C
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 6.0.0.
+This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 8.1.3.
 
 ## Development server
 
