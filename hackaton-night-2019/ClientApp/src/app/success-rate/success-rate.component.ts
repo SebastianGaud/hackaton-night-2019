@@ -9,7 +9,7 @@ import { HttpClient } from "@angular/common/http";
     templateUrl: "./success-rate.component.html",
     styleUrls: ["./success-rate.component.scss"]
 })
-export class SuccessRateComponent implements OnInit {
+export class SuccessRateComponent {
     public pieChartOptions: ChartOptions = {
         responsive: true,
         legend: {
@@ -41,9 +41,7 @@ export class SuccessRateComponent implements OnInit {
         }
     ];
 
-    constructor(private http: HttpClient) {}
-
-    ngOnInit() {
+    constructor(private http: HttpClient) {
         this.http
             .get<Response>(
                 `${environment.base_url}/Dialog/GetSuccessRateAsJson`,
@@ -53,6 +51,7 @@ export class SuccessRateComponent implements OnInit {
             )
             .toPromise()
             .then(res => {
+                console.log(res);
                 this.pieChartData.push(res.successRate);
                 this.pieChartData.push(100 - res.successRate);
             }, console.log);

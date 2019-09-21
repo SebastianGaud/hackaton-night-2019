@@ -7,8 +7,9 @@ import { Component } from "@angular/core";
             <nb-layout-header fixed>
                 <!-- Insert header here -->
             </nb-layout-header>
-
-            <app-charts></app-charts>
+            <nb-layout-column>
+                <app-charts></app-charts>
+            </nb-layout-column>
 
             <nb-layout-footer fixed>
                 <!-- Insert footer here -->
