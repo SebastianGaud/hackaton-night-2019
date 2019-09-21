@@ -93,7 +93,7 @@ namespace hackaton_night_2019.Controllers
             var requests = _dbContext.Get<MessageDescriptor>(Consts.MessageDescriptorTable).FindAll().AsQueryable();
 
             dto.StartDate = dto.StartDate ?? DateTime.MinValue;
-            dto.EndDate = dto.EndDate ?? DateTime.MinValue;
+            dto.EndDate = dto.EndDate ?? DateTime.MaxValue;
 
             var openedChats = requests.Where(x => x.TimeStamp >= dto.StartDate && x.TimeStamp <= dto.EndDate)
                 .GroupBy(x =>  x.TimeStamp.Date).Select(x=> new {day=x.Key.Date,openedChats = x.Select(y=>y.ConversationId).Distinct().Count()});
@@ -106,7 +106,7 @@ namespace hackaton_night_2019.Controllers
             var requests = _dbContext.Get<MessageDescriptor>(Consts.MessageDescriptorTable).FindAll().AsQueryable();
 
             dto.StartDate = dto.StartDate ?? DateTime.MinValue;
-            dto.EndDate = dto.EndDate ?? DateTime.MinValue;
+            dto.EndDate = dto.EndDate ?? DateTime.MaxValue;
 
             var successfulInteraction = requests.Where(x => x.TimeStamp >= dto.StartDate && x.TimeStamp <= dto.EndDate).GroupBy(x => x.TimeStamp.Date)
                 .Where(x => x.All(y => !y.TicketRefused && !y.OpenTicket)).Select(x=> new {day=x.Key.Date, successfulInteractions = x.Select(y => y.ConversationId).Distinct().Count() });
@@ -136,7 +136,7 @@ namespace hackaton_night_2019.Controllers
             var requests = _dbContext.Get<MessageDescriptor>(Consts.MessageDescriptorTable).FindAll().AsQueryable();
 
             dto.StartDate = dto.StartDate ?? DateTime.MinValue;
-            dto.EndDate = dto.EndDate ?? DateTime.MinValue;
+            dto.EndDate = dto.EndDate ?? DateTime.MaxValue;
 
             var openedTicket = requests.Where(x => x.TimeStamp >= dto.StartDate && x.TimeStamp <= dto.EndDate).GroupBy(x => x.TimeStamp.Date)
                 .Select(x=> new { date=x.Key.Date,openedTicket=x.Count(y=>y.OpenTicket)});
