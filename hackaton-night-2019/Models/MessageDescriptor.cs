@@ -12,7 +12,9 @@ namespace hackaton_night_2019.Models
         public string SessionId { get; set; }
         public string Question { get; set; }
         public string Response { get; set; }
-        public bool? OpenTicket { get; set; }
+        public bool OpenTicket { get; set; }
         public string ConversationId { get; set; }
+        public bool TicketRefused { get; set; }
+        public string IntentName { get; set; }
     }
 }
