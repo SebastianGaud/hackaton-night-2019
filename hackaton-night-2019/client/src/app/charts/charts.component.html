@@ -1,0 +1,72 @@
+<nb-layout-column>
+    <div style="display: flex; flex-direction: row">
+        <nb-card style="width: 900px; margin-right: 25px">
+            <nb-card-body>
+                <div style="display: block">
+                    <canvas
+                        baseChart
+                        [datasets]="barChartData"
+                        [labels]="barChartLabels"
+                        [options]="barChartOptions"
+                        [legend]="barChartLegend"
+                        [chartType]="barChartType"
+                    >
+                    </canvas>
+                </div>
+            </nb-card-body>
+        </nb-card>
+        <nb-card style="width: 550px">
+            <nb-card-body>
+                <div
+                    style="display: flex; justify-content: center; align-items: center"
+                >
+                    <canvas
+                        baseChart
+                        [data]="pieChartData"
+                        [labels]="pieChartLabels"
+                        [chartType]="pieChartType"
+                        [options]="pieChartOptions"
+                        [colors]="pieChartColors"
+                        [legend]="pieChartLegend"
+                    >
+                    </canvas>
+                </div>
+            </nb-card-body>
+        </nb-card>
+    </div>
+    <div style="display: flex; flex-direction: row">
+        <nb-card style="width: 550px;  margin-right: 25px">
+            <nb-card-body>
+                <div
+                    style="display: flex; justify-content: center; align-items: center"
+                >
+                    <canvas
+                        baseChart
+                        [data]="pieChartData"
+                        [labels]="pieChartLabels"
+                        [chartType]="pieChartType"
+                        [options]="pieChartOptions"
+                        [colors]="pieChartColors"
+                        [legend]="pieChartLegend"
+                    >
+                    </canvas>
+                </div>
+            </nb-card-body>
+        </nb-card>
+        <nb-card style="width: 900px">
+            <nb-card-body>
+                <div style="display: block">
+                    <canvas
+                        baseChart
+                        [datasets]="barChartData"
+                        [labels]="barChartLabels"
+                        [options]="barChartOptions"
+                        [legend]="barChartLegend"
+                        [chartType]="barChartType"
+                    >
+                    </canvas>
+                </div>
+            </nb-card-body>
+        </nb-card>
+    </div>
+</nb-layout-column>
