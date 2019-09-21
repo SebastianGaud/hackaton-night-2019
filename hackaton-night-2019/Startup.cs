@@ -39,7 +39,7 @@ namespace hackaton_night_2019
             // In production, the Angular files will be served from this directory
             services.AddSpaStaticFiles(configuration =>
             {
-                configuration.RootPath = "client/dist";
+                configuration.RootPath = "ClientApp/dist";
             });
 
 
@@ -73,7 +73,7 @@ namespace hackaton_night_2019
                 // To learn more about options for serving an Angular SPA from ASP.NET Core,
                 // see https://go.microsoft.com/fwlink/?linkid=864501
 
-                spa.Options.SourcePath = "client";
+                spa.Options.SourcePath = "ClientApp";
 
                 if(env.IsDevelopment())
                 {
