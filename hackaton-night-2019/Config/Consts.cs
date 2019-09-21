@@ -7,6 +7,6 @@ namespace hackaton_night_2019.Config
 {
     public class Consts
     {
-        public readonly string MessageDescriptorTable = "messages";
+        public static readonly string MessageDescriptorTable = "messages";
     }
 }

@@ -12,5 +12,6 @@ namespace hackaton_night_2019.Models
         public string Question { get; set; }
         public string Response { get; set; }
         public bool? OpenTicket { get; set; }
+        public int ConversationId { get; set; }
     }
 }
