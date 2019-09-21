@@ -11,8 +11,8 @@ import { environment } from "src/environments/environment.prod";
 })
 export class OpenedChartComponent {
     public barChartType: ChartType = "bar";
-    public barChartLegend = true;
     public barChartLabels: Label[] = [];
+    public barChartLegend = false;
     public barChartData: ChartDataSets[] = [];
     public barChartOptions: ChartOptions = {
         responsive: true,
