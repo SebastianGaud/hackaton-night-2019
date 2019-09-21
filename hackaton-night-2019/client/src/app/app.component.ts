@@ -8,8 +8,8 @@ import { Component } from "@angular/core";
                 <!-- Insert header here -->
             </nb-layout-header>
 
-            <nb-layout-column> 
-              <app-openedchart></opened-chart>
+            <nb-layout-column>
+                <app-openedchart></app-openedchart>
             </nb-layout-column>
         </nb-layout>
     `,

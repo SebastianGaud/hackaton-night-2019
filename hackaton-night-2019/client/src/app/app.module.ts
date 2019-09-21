@@ -11,9 +11,11 @@ import {
 } from "@nebular/theme";
 import { NbEvaIconsModule } from "@nebular/eva-icons";
 import { HttpClientModule } from "@angular/common/http";
+import { OpenedchartComponent } from "./openedchart/openedchart.component";
+import { ChartsModule } from "ng2-charts";
 
 @NgModule({
-    declarations: [AppComponent],
+    declarations: [AppComponent, OpenedchartComponent],
     imports: [
         BrowserModule,
         AppRoutingModule,
@@ -23,7 +25,8 @@ import { HttpClientModule } from "@angular/common/http";
         NbLayoutModule,
         NbEvaIconsModule,
         NbChatModule,
-        NbSpinnerModule
+        NbSpinnerModule,
+        ChartsModule
     ],
     providers: [],
     bootstrap: [AppComponent]
