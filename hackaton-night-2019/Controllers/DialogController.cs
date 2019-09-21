@@ -1,16 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using ApiAiSDK;
 using ApiAiSDK.Model;
 using hackaton_night_2019.Config;
 using hackaton_night_2019.Models;
 using hackaton_night_2019.Services;
-using Microsoft.AspNetCore.Authentication.Twitter;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
-
 
 namespace hackaton_night_2019.Controllers
 {
@@ -65,7 +62,7 @@ namespace hackaton_night_2019.Controllers
                 responseText = responseText.Replace("0", link);
             }
 
-            var messageDescriptor = new MessageDescriptor()
+            var messageDescriptor = new MessageDescriptor
             {
                 OpenTicket = response.Result.Metadata.IntentName.Contains("ConfermaAperturaTicket"),
                 Question = question,
@@ -77,9 +74,6 @@ namespace hackaton_night_2019.Controllers
                 IntentName = response.Result.Metadata.IntentName
 
             };
-
-
-            _dbContext.Set(messageDescriptor, Consts.MessageDescriptorTable);
 
             return Ok(new
             {
@@ -98,7 +92,7 @@ namespace hackaton_night_2019.Controllers
             var openedChats = requests.Where(x => x.TimeStamp >= dto.StartDate && x.TimeStamp <= dto.EndDate)
                 .GroupBy(x =>  x.TimeStamp.Date).Select(x=> new {day=x.Key.Date.ToShortDateString(), openedChats = x.Select(y=>y.ConversationId).Distinct().Count()});
 
-            return Ok(new { openedChats = openedChats });
+            return Ok(new {openedChats });
         }
 
         public IActionResult GetSuccessfulInteractionsAsJson(ReportDto dto)
@@ -112,7 +106,7 @@ namespace hackaton_night_2019.Controllers
                 .Where(x => x.All(y => !y.TicketRefused && !y.OpenTicket)).Select(x=> new {day=x.Key.Date.ToShortDateString(), successfulInteractions = x.Select(y => y.ConversationId).Distinct().Count() });
 
 
-            return Ok(new { successfulInteraction = successfulInteraction });
+            return Ok(new {successfulInteraction });
         }
 
         public IActionResult GetSuccessRateAsJson()
@@ -122,13 +116,12 @@ namespace hackaton_night_2019.Controllers
             var openedChats = requests
                 .Select(x => x.ConversationId).Distinct().Count();
 
-            var successfulInteraction = requests.GroupBy(x => x.ConversationId)
-                .Select(x => x.All(y => !y.TicketRefused && !y.OpenTicket)).Count();
+            var successfulInteraction = requests
+                .GroupBy(x => x.ConversationId).Count(x => x.All(y => !y.TicketRefused && !y.OpenTicket));
 
-            var successRate = successfulInteraction / openedChats * 100;
+            var successRate = Math.Round((decimal)successfulInteraction / (decimal)openedChats * 100);
 
-
-            return Ok(new { successRate = successRate });
+            return Ok(new { successRate });
         }
 
         public IActionResult GetOpenedTicketsAsJson(ReportDto dto)
@@ -141,7 +134,7 @@ namespace hackaton_night_2019.Controllers
             var openedTicket = requests.Where(x => x.TimeStamp >= dto.StartDate && x.TimeStamp <= dto.EndDate).GroupBy(x => x.TimeStamp.Date)
                 .Select(x=> new { date=x.Key.Date.ToShortDateString(), openedTicket=x.Count(y=>y.OpenTicket)});
 
-            return Ok(new { openedTicket = openedTicket });
+            return Ok(new {openedTicket });
         }
     }
 }
