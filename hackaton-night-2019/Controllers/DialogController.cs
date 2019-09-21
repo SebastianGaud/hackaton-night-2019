@@ -30,6 +30,23 @@ namespace hackaton_night_2019.Controllers
 
             var response = apiAi.TextRequest(question, requestExtras);
 
+            var responseText = response.Result.Fulfillment.Speech;
+
+            if (responseText.Contains("questo link"))
+            {
+                var link = responseText.Substring(responseText.IndexOf("(", StringComparison.Ordinal)+1,
+                    responseText.Length - responseText.IndexOf("(", StringComparison.Ordinal)-2);
+                responseText = responseText.Remove(responseText.IndexOf("(", StringComparison.Ordinal));
+                var htmlLink = "<a href=" + link + "></a>";
+
+                return Ok(new
+                {
+                    data = responseText + htmlLink,
+                    context = response.Result.Contexts.FirstOrDefault()?.Name,
+                    link= htmlLink
+                });
+            }
+
             return Ok(new
             {
                 data = response.Result.Fulfillment.Speech,
