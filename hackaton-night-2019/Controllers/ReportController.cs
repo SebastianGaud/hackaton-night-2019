@@ -20,15 +20,75 @@ namespace hackaton_night_2019.Controllers
         public ReportController(IDatabaseContext context)
         {
             _context = context;
-            _intentRegistry = new Dictionary<string, IEnumerable<string>>()
+            var r = new Dictionary<string, IEnumerable<string>>
             {
-                {"Connessione lenta", new List<string>() },
-                {"Connessione non funziona", new List<string>() },
-                {"Telefono non funziona", new List<string>() },
-                {"Telefono riceve ma non ne effettua", new List<string>() },
-                {"Telefono effettua ma non riceve", new List<string>() },
-                {"Telefono collegato ma non funziona", new List<string>() },
+                {
+                    "Connessione lenta", new List<string>
+                    {
+                        "ConnessioneLenta ", " ConnessioneLenta - Risolto", " ApriTicket - Connessione ",
+                        " RifiutoAperturaTicketConnessione", " ConfermaAperturaTicketConnessione"
+                    }
+                },
+                {
+                    "Connessione non funziona", new List<string>
+                    {
+                        "AntennaCollegata", "AntennaCollegata - Risolto", "RiavvioElettrico ",
+                        " RiavvioElettrico - Risolto", " Guida ", " ApriTicket ",
+                        " ConfermaAperturaTicketConnessioneNonFunzionante",
+                        " RifiutoAperturaTicketConnessioneNonFunzionante", " Guida - Risolto"
+                    }
+                },
+                {
+                    "Telefono non funziona", new List<string>
+                    {
+                        "TelefonoNonChiama ", " TelefonoNonChiama - Risolto", " Composizione ", " TelefonoDiverso ",
+                        " TelefonoDiverso - ApriTicket ", " ConfermaAperturaTicketTelefonoNonChiama",
+                        " RifiutoAperturaTicketTelefonoNonChiama", " TelefonoDiverso - Risolto",
+                        " Composizione - Risolto"
+                    }
+                },
+                {
+                    "Telefono riceve ma non ne effettua", new List<string>
+                    {
+                        "TelefonoNonChiamaENonRiceve ", " TelefonoNonChiamaENonRiceveRisolto",
+                        " TelefonoNonChiamaENonRiceveRiavvia ", " TelefonoNonChiamaENonRiceveRiavviaRisolto",
+                        " TelefonoNonChiamaENonRiceveRiavviaTicket ",
+                        " ConfermaAperturaTicketTelefonoNonChiamaENonRiceve",
+                        " RifiutoAperturaTicketTelefonoNonChiamaENonRiceve"
+                    }
+                },
+                {
+                    "Telefono effettua ma non riceve", new List<string>
+                    {
+                        "TelefonoNonRiceve ", " TelefonoDifferente ", " TelefonoDifferente - Risolto",
+                        " TelefonoDifferente - ApriTicket ", " RifiutoAperturaTicketTelefonoNonRiceve",
+                        " ConfermaAperturaTicketTelefonoNonRiceve", " TelefonoNonRiceve - Risolto"
+                    }
+                },
+                {
+                    "Telefono collegato ma non funziona", new List<string>
+                    {
+                        "TelefonoNonFunziona ", " TelefonoNonFunziona - Risolto", " TelefonoRiavvio ",
+                        "CambioTelefono ", " CambioTelefono - ApriTicket ",
+                        "Conferma AperturaTicketTelefonoNonFunziona", " RifiutoAperturaTicketTelefonoNonFunziona",
+                        "CambioTelefono - Risolto", " TelefonoRiavvio - Risolto"
+                    }
+                },
+                {
+                    "Disconnessione", new List<string>
+                    {
+                        "Disconnessione", "Disconnessione - Guida", "Disconnessione - Guida - Risolto",
+                        "RifiutoAperturaTicketDisconnessione", " ConfermaAperturaTicketDisconnesione",
+                        "Disconnessione - Guida - no", "Disconnessione - Risolto"
+                    }
+                }
             };
+
+            _intentRegistry = new Dictionary<string, IEnumerable<string>>();
+            foreach (var k in r.Keys)
+            {
+                _intentRegistry[k] = r[k].Select(x => x.TrimEnd().TrimStart());
+            }
         }
 
         public string GetValue(string intentName)
