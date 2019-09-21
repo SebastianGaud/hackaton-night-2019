@@ -56,7 +56,10 @@ namespace hackaton_night_2019.Controllers
                 Response = responseText,
                 SessionId = response.SessionId,
                 TimeStamp = DateTime.Now,
-                ConversationId = conversationId
+                ConversationId = conversationId,
+                TicketRefused = response.Result.Metadata.IntentName.Contains("RifiutoAperturaTicket"),
+                IntentName = response.Result.Metadata.IntentName
+
             };
 
             _dbContext.Set(messageDescriptor, Consts.MessageDescriptorTable);
@@ -67,6 +70,53 @@ namespace hackaton_night_2019.Controllers
                 data = responseText,
                 context = response.Result.Contexts.FirstOrDefault()?.Name
             });
+        }
+
+        public IActionResult GetOpenedChatsAsJson()
+        {
+            var requests = _dbContext.Get<MessageDescriptor>(Consts.MessageDescriptorTable).FindAll().AsQueryable();
+
+            var openedChats = requests
+                .Select(x => x.ConversationId).Distinct().Count();
+
+            return Ok(new { openedChats = openedChats });
+        }
+
+        public IActionResult GetSuccessfulInteractionsAsJson()
+        {
+            var requests = _dbContext.Get<MessageDescriptor>(Consts.MessageDescriptorTable).FindAll().AsQueryable();
+
+
+            var successfulInteraction = requests.GroupBy(x => x.ConversationId)
+                .Select(x => x.All(y => !y.TicketRefused && !y.OpenTicket)).Count();
+
+
+            return Ok(new { successfulInteraction = successfulInteraction });
+        }
+
+        public IActionResult GetSuccessRateAsJson()
+        {
+            var requests = _dbContext.Get<MessageDescriptor>(Consts.MessageDescriptorTable).FindAll().AsQueryable();
+
+            var openedChats = requests
+                .Select(x => x.ConversationId).Distinct().Count();
+
+            var successfulInteraction = requests.GroupBy(x => x.ConversationId)
+                .Select(x => x.All(y => !y.TicketRefused && !y.OpenTicket)).Count();
+
+            var successRate = successfulInteraction / openedChats * 100;
+
+
+            return Ok(new { successRate = successRate });
+        }
+
+        public IActionResult GetOpenedTicketsAsJson()
+        {
+            var requests = _dbContext.Get<MessageDescriptor>(Consts.MessageDescriptorTable).FindAll().AsQueryable();
+
+            var openedTicket = requests.Count(x => x.OpenTicket);
+
+            return Ok(new { openedTicket = openedTicket });
         }
     }
 }
