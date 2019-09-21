@@ -96,7 +96,7 @@ namespace hackaton_night_2019.Controllers
             dto.EndDate = dto.EndDate ?? DateTime.MaxValue;
 
             var openedChats = requests.Where(x => x.TimeStamp >= dto.StartDate && x.TimeStamp <= dto.EndDate)
-                .GroupBy(x =>  x.TimeStamp.Date).Select(x=> new {day=x.Key.Date,openedChats = x.Select(y=>y.ConversationId).Distinct().Count()});
+                .GroupBy(x =>  x.TimeStamp.Date).Select(x=> new {day=x.Key.Date.ToShortDateString(), openedChats = x.Select(y=>y.ConversationId).Distinct().Count()});
 
             return Ok(new { openedChats = openedChats });
         }
@@ -109,7 +109,7 @@ namespace hackaton_night_2019.Controllers
             dto.EndDate = dto.EndDate ?? DateTime.MaxValue;
 
             var successfulInteraction = requests.Where(x => x.TimeStamp >= dto.StartDate && x.TimeStamp <= dto.EndDate).GroupBy(x => x.TimeStamp.Date)
-                .Where(x => x.All(y => !y.TicketRefused && !y.OpenTicket)).Select(x=> new {day=x.Key.Date, successfulInteractions = x.Select(y => y.ConversationId).Distinct().Count() });
+                .Where(x => x.All(y => !y.TicketRefused && !y.OpenTicket)).Select(x=> new {day=x.Key.Date.ToShortDateString(), successfulInteractions = x.Select(y => y.ConversationId).Distinct().Count() });
 
 
             return Ok(new { successfulInteraction = successfulInteraction });
@@ -139,7 +139,7 @@ namespace hackaton_night_2019.Controllers
             dto.EndDate = dto.EndDate ?? DateTime.MaxValue;
 
             var openedTicket = requests.Where(x => x.TimeStamp >= dto.StartDate && x.TimeStamp <= dto.EndDate).GroupBy(x => x.TimeStamp.Date)
-                .Select(x=> new { date=x.Key.Date,openedTicket=x.Count(y=>y.OpenTicket)});
+                .Select(x=> new { date=x.Key.Date.ToShortDateString(), openedTicket=x.Count(y=>y.OpenTicket)});
 
             return Ok(new { openedTicket = openedTicket });
         }
