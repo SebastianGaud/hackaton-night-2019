@@ -72,23 +72,23 @@ namespace hackaton_night_2019.Controllers
             });
         }
 
-        public IActionResult GetOpenedChatsAsJson()
+        public IActionResult GetOpenedChatsAsJson(ReportDto dto)
         {
             var requests = _dbContext.Get<MessageDescriptor>(Consts.MessageDescriptorTable).FindAll().AsQueryable();
 
-            var openedChats = requests
-                .Select(x => x.ConversationId).Distinct().Count();
+            var openedChats = requests.Where(x => x.TimeStamp >= dto.StartDate && x.TimeStamp <= dto.EndDate)
+                .GroupBy(x =>  x.TimeStamp.Date).Select(x=> new {day=x.Key.Date,openedChats = x.Select(y=>y.ConversationId).Distinct().Count()});
 
             return Ok(new { openedChats = openedChats });
         }
 
-        public IActionResult GetSuccessfulInteractionsAsJson()
+        public IActionResult GetSuccessfulInteractionsAsJson(ReportDto dto)
         {
             var requests = _dbContext.Get<MessageDescriptor>(Consts.MessageDescriptorTable).FindAll().AsQueryable();
 
 
-            var successfulInteraction = requests.GroupBy(x => x.ConversationId)
-                .Select(x => x.All(y => !y.TicketRefused && !y.OpenTicket)).Count();
+            var successfulInteraction = requests.Where(x => x.TimeStamp >= dto.StartDate && x.TimeStamp <= dto.EndDate).GroupBy(x => x.TimeStamp.Date)
+                .Where(x => x.All(y => !y.TicketRefused && !y.OpenTicket)).Select(x=> new {day=x.Key.Date, successfulInteractions = x.Select(y => y.ConversationId).Distinct().Count() });
 
 
             return Ok(new { successfulInteraction = successfulInteraction });
@@ -110,11 +110,12 @@ namespace hackaton_night_2019.Controllers
             return Ok(new { successRate = successRate });
         }
 
-        public IActionResult GetOpenedTicketsAsJson()
+        public IActionResult GetOpenedTicketsAsJson(ReportDto dto)
         {
             var requests = _dbContext.Get<MessageDescriptor>(Consts.MessageDescriptorTable).FindAll().AsQueryable();
 
-            var openedTicket = requests.Count(x => x.OpenTicket);
+            var openedTicket = requests.Where(x => x.TimeStamp >= dto.StartDate && x.TimeStamp <= dto.EndDate).GroupBy(x => x.TimeStamp.Date)
+                .Select(x=> new { date=x.Key.Date,openedTicket=x.Count(y=>y.OpenTicket)});
 
             return Ok(new { openedTicket = openedTicket });
         }
