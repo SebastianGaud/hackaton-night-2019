@@ -28,22 +28,6 @@ namespace hackaton_night_2019.Controllers
 
             var apiAi = new ApiAiSDK.ApiAi(config);
 
-            
-
-            //if (context.Contains("CreateTicketMail"))
-            //{
-            //    try
-            //    {
-            //        var addr = new System.Net.Mail.MailAddress(question);
-            //        contexts.Add(new AIContext { Name = "CorrectEmail", Lifespan = 1 });
-            //    }
-            //    catch (Exception)
-            //    {
-            //        contexts.Add(new AIContext { Name = "InvalidEmail", Lifespan = 1 });
-            //        question = "error";
-            //    }
-            //}
-
             switch (context)
             {
                 case "Mail":
@@ -54,7 +38,7 @@ namespace hackaton_night_2019.Controllers
                     }
                     catch (Exception)
                     {
-                        context="InvalidEmail";
+                        context="InvalidMail";
                         question = "mailUtenteNonValida";
                     }
                     break;
@@ -63,15 +47,33 @@ namespace hackaton_night_2019.Controllers
                     
                     question = "serialeUtente";
 
-                    break;
+                    var requests = _dbContext.Get<Freight>(Consts.FreightTable).FindAll().AsQueryable();
+
+                    var freight = requests.FirstOrDefault(x => x.FreightDescriptions == question);
+
+                    if (freight != null && freight.HasSupport)
+                    {
+                        return Ok(new
+                        {
+                            data = "I dati relativi al suo ticket sono : seriale : " + freight.FreightDescriptions +
+                                   "marca : " + freight.Brand + "modello :" + freight.Model,
+                            context = ""
+                        });
+                    }
+                    else
+                    {
+                        return Ok(new
+                        {
+                            data = "Il suo ticket è stato rifiutato",
+                            context = ""
+                        });
+                    }
 
                 case "NomeCognome":
 
-                    return Ok(new
-                    {
-                        data = "Ticket aperto con successo",
-                        context = ""
-                    });
+                    question = "nomeCognomeUtente";
+
+                    break;
             }
 
             var contexts = new List<AIContext> {new AIContext {Name = context, Lifespan = 1}};
