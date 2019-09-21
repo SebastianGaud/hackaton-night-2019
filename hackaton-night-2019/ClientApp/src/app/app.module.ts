@@ -10,9 +10,10 @@ import { ChartsModule } from "ng2-charts";
 import { HttpClientModule } from "@angular/common/http";
 import { ChartsComponent } from './charts/charts.component';
 import { OpenedChartComponent } from './opened-chart/opened-chart.component';
+import { SuccessRateComponent } from './success-rate/success-rate.component';
 
 @NgModule({
-    declarations: [AppComponent, ChartsComponent, OpenedChartComponent],
+    declarations: [AppComponent, ChartsComponent, OpenedChartComponent, SuccessRateComponent],
     imports: [
         BrowserModule,
         AppRoutingModule,
