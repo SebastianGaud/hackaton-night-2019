@@ -75,6 +75,8 @@ namespace hackaton_night_2019.Controllers
 
             };
 
+            _dbContext.Set(messageDescriptor, Consts.MessageDescriptorTable);
+
             return Ok(new
             {
                 data = responseText,
