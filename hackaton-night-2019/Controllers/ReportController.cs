@@ -49,11 +49,18 @@ namespace hackaton_night_2019.Controllers
 
             var count = data.GroupBy(x => x.IntentName).ToDictionary(k => k.Key, v => v.Count());
 
-            return Ok(data.GroupBy(x => x.IntentName, descriptor => new
+            return Ok(new
             {
-                desc = GetValue(descriptor.IntentName),
-                c = count[descriptor.IntentName]
-            }));
+                data = data.Select(descriptor => new
+                {
+                    desc = GetValue(descriptor.IntentName),
+                    c = count[descriptor.IntentName]
+                }).GroupBy(m => m.desc).ToDictionary(k => k.Key, v => v.Sum(c => c.c)).Select(x => new
+                {
+                    desc = x.Key,
+                    c = x.Value
+                })
+            });
         }
     }
 }

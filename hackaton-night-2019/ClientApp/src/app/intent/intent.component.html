@@ -1,1 +1,16 @@
-<p>intent works!</p>
+<div style="display: block">
+    <h5
+        style="display: flex; justify-content: center; margin-top: 0; margin-bottom: 5px"
+    >
+        Chat per intent
+    </h5>
+    <canvas
+        baseChart
+        [datasets]="barChartData"
+        [labels]="barChartLabels"
+        [options]="barChartOptions"
+        [legend]="barChartLegend"
+        [chartType]="barChartType"
+    >
+    </canvas>
+</div>
