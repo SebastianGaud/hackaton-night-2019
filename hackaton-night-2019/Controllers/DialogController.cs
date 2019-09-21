@@ -69,7 +69,7 @@ namespace hackaton_night_2019.Controllers
                         });
                     }
 
-                case "nomeCognome":
+                case "nomecognome":
 
                     question = "nomeCognomeUtente";
 
