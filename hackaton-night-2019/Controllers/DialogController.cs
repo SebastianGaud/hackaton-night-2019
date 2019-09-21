@@ -28,7 +28,7 @@ namespace hackaton_night_2019.Controllers
 
             var apiAi = new ApiAiSDK.ApiAi(config);
 
-            var contexts = new List<AIContext>();
+            
 
             //if (context.Contains("CreateTicketMail"))
             //{
@@ -44,7 +44,37 @@ namespace hackaton_night_2019.Controllers
             //    }
             //}
 
-            contexts.Add(new AIContext { Name = context, Lifespan = 1 });
+            switch (context)
+            {
+                case "Mail":
+                    try
+                    {
+                        var addr = new System.Net.Mail.MailAddress(question);
+                        question = "mailUtente";
+                    }
+                    catch (Exception)
+                    {
+                        context="InvalidEmail";
+                        question = "mailUtenteNonValida";
+                    }
+                    break;
+
+                case "Seriale":
+                    
+                    question = "serialeUtente";
+
+                    break;
+
+                case "NomeCognome":
+
+                    return Ok(new
+                    {
+                        data = "Ticket aperto con successo",
+                        context = ""
+                    });
+            }
+
+            var contexts = new List<AIContext> {new AIContext {Name = context, Lifespan = 1}};
 
             var requestExtras= new RequestExtras
             {
