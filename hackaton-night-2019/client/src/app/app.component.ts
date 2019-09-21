@@ -7,6 +7,7 @@ import { Component } from "@angular/core";
             <nb-layout-header fixed>
                 Data and charts
             </nb-layout-header>
+
             <nb-layout-column>
                 <app-charts></app-charts>
             </nb-layout-column>
