@@ -29,12 +29,31 @@ namespace hackaton_night_2019.Controllers
             };
         }
 
+        public string GetValue(string intentName)
+        {
+            foreach (var k in _intentRegistry.Keys)
+            {
+                if (_intentRegistry[k].Contains(intentName))
+                {
+                    return k;
+                }
+            }
+
+            return "Generico";
+        }
+
 
         public IActionResult GetIntentAnalisys()
         {
             var data = _context.Get<MessageDescriptor>(Consts.MessageDescriptorTable).FindAll();
 
-            return null;
+            var count = data.GroupBy(x => x.IntentName).ToDictionary(k => k.Key, v => v.Count());
+
+            return Ok(data.GroupBy(x => x.IntentName, descriptor => new
+            {
+                desc = GetValue(descriptor.IntentName),
+                c = count[descriptor.IntentName]
+            }));
         }
     }
 }

@@ -12,9 +12,10 @@ import { ChartsComponent } from './charts/charts.component';
 import { OpenedChartComponent } from './opened-chart/opened-chart.component';
 import { SuccessRateComponent } from './success-rate/success-rate.component';
 import { TicketComponent } from './ticket/ticket.component';
+import { IntentComponent } from './intent/intent.component';
 
 @NgModule({
-    declarations: [AppComponent, ChartsComponent, OpenedChartComponent, SuccessRateComponent, TicketComponent],
+    declarations: [AppComponent, ChartsComponent, OpenedChartComponent, SuccessRateComponent, TicketComponent, IntentComponent],
     imports: [
         BrowserModule,
         AppRoutingModule,
