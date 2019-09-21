@@ -9,7 +9,7 @@ import { environment } from "src/environments/environment.prod";
     templateUrl: "./opened-chart.component.html",
     styleUrls: ["./opened-chart.component.scss"]
 })
-export class OpenedChartComponent implements OnInit {
+export class OpenedChartComponent {
     public barChartType: ChartType = "bar";
     public barChartLegend = true;
     public barChartLabels: Label[] = [];
@@ -26,9 +26,7 @@ export class OpenedChartComponent implements OnInit {
         }
     };
 
-    constructor(private http: HttpClient) {}
-
-    ngOnInit() {
+    constructor(private http: HttpClient) {
         var chartData = {
             data: []
         };
@@ -42,7 +40,7 @@ export class OpenedChartComponent implements OnInit {
             .toPromise()
             .then(res => {
                 res.openedChats.forEach(e => {
-                    this.barChartLabels.push(e.day.toDateString());
+                    this.barChartLabels.push(e.day);
                     chartData.data.push(e.openedChats);
                 });
             }, console.log);
@@ -55,6 +53,6 @@ interface Response {
 }
 
 interface ResponeObj {
-    day: Date;
+    day: string;
     openedChats: number;
 }
