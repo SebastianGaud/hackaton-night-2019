@@ -9,9 +9,10 @@ import { NbEvaIconsModule } from "@nebular/eva-icons";
 import { ChartsModule } from "ng2-charts";
 import { HttpClientModule } from "@angular/common/http";
 import { ChartsComponent } from './charts/charts.component';
+import { OpenedChartComponent } from './opened-chart/opened-chart.component';
 
 @NgModule({
-    declarations: [AppComponent, ChartsComponent],
+    declarations: [AppComponent, ChartsComponent, OpenedChartComponent],
     imports: [
         BrowserModule,
         AppRoutingModule,
