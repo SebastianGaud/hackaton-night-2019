@@ -1,15 +1,64 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit } from "@angular/core";
+import { ChartOptions, ChartType } from "chart.js";
+import { Label } from "ng2-charts";
+import { environment } from "src/environments/environment";
+import { HttpClient } from "@angular/common/http";
 
 @Component({
-  selector: 'app-success-rate',
-  templateUrl: './success-rate.component.html',
-  styleUrls: ['./success-rate.component.scss']
+    selector: "app-success-rate",
+    templateUrl: "./success-rate.component.html",
+    styleUrls: ["./success-rate.component.scss"]
 })
 export class SuccessRateComponent implements OnInit {
+    public pieChartOptions: ChartOptions = {
+        responsive: true,
+        legend: {
+            position: "top"
+        },
+        plugins: {
+            datalabels: {
+                formatter: (value, ctx) => {
+                    const label = ctx.chart.data.labels[ctx.dataIndex];
+                    return label;
+                }
+            }
+        }
+    };
 
-  constructor() { }
+    public pieChartLabels: Label[] = [
+        "Chat portate a buon termine",
+        "Chat troncate"
+    ];
+    public pieChartData: number[] = [];
+    public pieChartType: ChartType = "pie";
+    public pieChartColors = [
+        {
+            backgroundColor: [
+                "rgba(255,0,0,0.3)",
+                "rgba(0,255,0,0.3)",
+                "rgba(0,0,255,0.3)"
+            ]
+        }
+    ];
 
-  ngOnInit() {
-  }
+    constructor(private http: HttpClient) {}
 
+    ngOnInit() {
+        this.http
+            .get<Response>(
+                `${environment.base_url}/Dialog/GetSuccessRateAsJson`,
+                {
+                    params: {}
+                }
+            )
+            .toPromise()
+            .then(res => {
+                this.pieChartData.push(res.successRate);
+                this.pieChartData.push(100 - res.successRate);
+            }, console.log);
+    }
+}
+
+interface Response {
+    successRate: number;
 }
